@@ -2,7 +2,6 @@ from base64 import urlsafe_b64decode
 from flask import Flask, jsonify, request, redirect, abort, render_template_string
 import time
 import threading
-from unittest import skip
 import requests
 import pandas as pd
 import schedule
@@ -35,7 +34,7 @@ def saveStatus(url, status):
         url_status_records[url].insert(0,sr)
 
 def task():
-    df= pd.read_csv('test.csv')
+    df= pd.read_csv('urls.csv')
     for url in df['url']:
         try: 
             response= requests.get(url)
@@ -82,14 +81,14 @@ def index():
     return render_template_string('''
     <table>
             <tr>
-                <td> URL </td>
-                <td> Status Now </td>
-                <td> Status 10m ago </td>
-                <td> Status 20m ago </td>
-                <td> Status 30m ago </td>
-                <td> Status 40m ago </td>
-                <td> Status 50m ago </td>
-                <td> Status 60m ago </td>
+                <td><b> URL </b></td>
+                <td><b> Status Now </b></td>
+                <td><b> Status 10m ago </b></td>
+                <td><b> Status 20m ago </b></td>
+                <td><b> Status 30m ago </b></td>
+                <td><b> Status 40m ago </b></td>
+                <td><b> Status 50m ago </b></td>
+                <td><b> Status 60m ago </b></td>
             </tr>
             {% for url in url_status_records %}
             <tr>
