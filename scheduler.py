@@ -11,7 +11,6 @@ from json import JSONEncoder
 
 app = Flask(__name__)
 
-
 class StatusRecord(dict):
   def __init__(self, timestamp, status):
     dict.__init__(self, timestamp=timestamp, status=status)
@@ -53,9 +52,6 @@ def task():
             saveStatus(url, status)
             continue
             raise SystemExit(e)      
-        
-    print("PULSE END")
-
 
 def scheduleFunc():
     while 1:
@@ -65,10 +61,8 @@ def scheduleFunc():
 # makes our logic non blocking
 thread = threading.Thread(target=scheduleFunc)
 thread.start()
-schedule.every(2).seconds.do(task)
-
-print("no block")
-
+schedule.every(10).minutes.do(task)
+task()
 @app.route('/', methods=['GET'])
 def index():
     # for url in url_status_records:
